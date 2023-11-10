@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Data</title>
+</head>
+<body>
+    <h1>User Data</h1>
+    <ul id="user-list">
+        <!-- Use EJS tags to iterate and display user data -->
+        <% users.forEach(user => { %>
+          <li style="padding: 10px;">Username: <%= user.username %></li> 
+          <li style="padding: 10px;"> Email: <%= user.email %></li>
+        <% }); %>
+    </ul>
+    <a href="api/User">here</a>
+
+</body>
+</html>
