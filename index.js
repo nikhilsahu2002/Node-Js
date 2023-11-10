@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+
 const session = require('express-session');
 const app = express();
 const port = 5000; // Choose an appropriate port
