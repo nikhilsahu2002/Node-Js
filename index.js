@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const session = require('express-session');
 const app = express();
-const port = process.env.PORT || 5000; // Choose an appropriate port
+const port = process.env.PORT || 10000; // Choose an appropriate port
 
 const uri = 'mongodb+srv://death1233freak:Nikhil1233@nikhil.ya32hpr.mongodb.net/IAS?retryWrites=true&w=majority';
 
