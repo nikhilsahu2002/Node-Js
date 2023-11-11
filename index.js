@@ -120,6 +120,7 @@ app.post('/logout', (req, res) => {
 });
 app.get('/login', async (req, res) => {
     res.render('login', { error: '' });
+    console.log("running")
   });
 
   
