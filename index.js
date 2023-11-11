@@ -50,7 +50,7 @@ app.get('/api/User', async (req, res) => {
 });
 
 // Serve the HTML page when the root path is accessed
-app.get('/', async (req, res) => {
+app.get('/', checkLoggedIn, async (req, res) => {
     try {
       const users = await User.find();
       res.render('index', { users, user: req.session.user }); // Pass 'users' and 'user' to the EJS template
