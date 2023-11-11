@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const session = require('express-session');
 const app = express();
-const port = 5000; // Choose an appropriate port
+const port = process.env.PORT || 5000; // Choose an appropriate port
 
 const uri = 'mongodb+srv://death1233freak:Nikhil1233@nikhil.ya32hpr.mongodb.net/IAS?retryWrites=true&w=majority';
 
@@ -45,7 +45,7 @@ app.get('/api/User', async (req, res) => {
       res.json(users);
     } catch (error) {
       console.error('Error fetching data:', error);
-      res.status(500).json({ error: 'An error occurred while fetching data.' });
+      res.status(port).json({ error: 'An error occurred while fetching data.' });
     }
 });
 
