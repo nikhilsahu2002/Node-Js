@@ -1,8 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 5000;
+const bcrypt = require("bcryptjs");
 
 app.use(express.json());
+app.use(cors());
 
 let items = [
   { id: 1, name: "Item 1" },
@@ -10,22 +13,68 @@ let items = [
   { id: 3, name: "Item 3" },
 ];
 
+let users = [{ id: 1, Username: "Nikhil", Password: "123" }];
+
 app.get("/api/items", (res, rep) => {
   rep.json(items);
 });
 
+app.get("/api/users", (req, res) => {
+  res.json(users);
+});
+
+app.post("/api/users/login", (req, res) => {
+  try {
+    const { Username, password } = req.body;
+    const user = users.find((e) => e.Username === Username);
+
+    if (user) {
+      const passwordMatch = bcrypt.compare(password, user.Password);
+
+      if (passwordMatch) {
+        res.json({ message: "Login successful" });
+      } else {
+        res.json({ message: "Incorrect password" });
+      }
+    } else {
+      res.json({ message: "User does not exist" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.post("/api/users", async (req, res) => {
+  try {
+    const Cradiatiions = req.body;
+    const userid = users.length + 1;
+    const Hashpassword = await bcrypt.hash(Cradiatiions.Password, 10);
+    Cradiatiions.id = userid;
+    Cradiatiions.Password = Hashpassword;
+    users.push(Cradiatiions);
+    res.json({ message: "the Data is Set" });
+  } catch (error) {
+    res.json({ message: "Something Is Error Here" });
+  }
+});
+
 app.get("/api/items/:id", (req, res) => {
-  const itemsid = parseInt(req.params.id);
-  const data = items.findIndex((items) => items.id === itemsid);
-  if (data !== -1) {
-    res.json(items[data].name);
+  const itemId = parseInt(req.params.id);
+
+  const dataIndex = items.findIndex((item) => item.id === itemId);
+
+  if (dataIndex !== -1) {
+    res.json(items[dataIndex]);
   } else {
-    res.json({ Msessage: "NO Id" });
+    res.json({ message: "No item found with the specified ID" });
   }
 });
 
 app.post("/api/items", (req, res) => {
   const newItms = req.body;
+  const newid = items.length + 1;
+  newItms.id = newid;
   items.push(newItms);
   res.json(`itms added ${newItms.name}`);
 });
